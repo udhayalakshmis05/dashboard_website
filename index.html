@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Professional Dashboard Services — Udhaya</title>
+  <style>
+    :root{
+      --brand1:#6a11cb; --brand2:#fc253b; --bg:#f4f6f9; --card:#ffffff; --text:#1f2937;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    a{color:inherit}
+
+    /* PAGE 1 */
+    header.hero{
+      background: linear-gradient(45deg, var(--brand1), var(--brand2));
+      color:#fff; text-align:center; padding:64px 20px 72px;
+    }
+    .hero h1{margin:0;font-weight:800;font-size:clamp(24px,4vw,40px)}
+    .hero p{opacity:.95;margin:12px auto 0;max-width:740px;font-size:clamp(14px,2.2vw,18px)}
+    .btn{
+      display:inline-block;margin-top:24px;padding:12px 22px;background:#fff;color:var(--brand2);
+      border-radius:12px;text-decoration:none;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.15);
+      transition:transform .15s ease, box-shadow .15s ease
+    }
+    .btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.2)}
+
+    /* PAGE 2 */
+    .wrap{max-width:1100px;margin:0 auto;padding:28px 16px 40px}
+    h2{margin:18px 0 10px;text-align:center;font-size:clamp(18px,3vw,28px)}
+    .sub{margin:0 0 18px;text-align:center;color:#6b7280;font-size:14px}
+
+    /* MINI CHART GRID */
+    .charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;justify-items:center}
+    .chart-card{
+      width:240px; max-width:100%; background:var(--card); border-radius:14px; padding:10px 12px;
+      box-shadow:0 6px 18px rgba(0,0,0,.08); display:flex; flex-direction:column; align-items:stretch
+    }
+    .chart-title{font-size:13px;font-weight:700;color:#374151;margin:2px 4px 8px}
+    .chart-canvas{width:100%; height:150px !important;}
+
+    footer{background:#111827;color:#e5e7eb;text-align:center;padding:18px}
+    footer a{color:#93c5fd;text-decoration:none}
+
+    html{scroll-behavior:smooth}
+  </style>
+</head>
+<body>
+  <!-- PAGE 1 -->
+  <header class="hero" id="home">
+    <h1>📊Smart Dashboards for Every Business — From Startups to Enterprises</h1>
+    <p>We design interactive dashboards in Power BI & Web — simple, fast, and tailored for your business. Get clear insights with real-time charts, filters, and slicers</p>
+    <a class="btn" href="#dashboard">See Sample Dashboard</a>
+  </header>
+
+  <!-- PAGE 2 -->
+  <main class="wrap" id="dashboard">
+    <h2>Sample Dashboard (Mini Charts)</h2>
+    <p class="sub">Compact visual cards perfect for your homepage or KPI wall. Any data can be plugged in.</p>
+
+    <section class="charts">
+      <article class="chart-card">
+        <div class="chart-title">Monthly Sales (Bar)</div>
+        <canvas id="barChart" class="chart-canvas"></canvas>
+      </article>
+      <article class="chart-card">
+        <div class="chart-title">Revenue Trend (Line)</div>
+        <canvas id="lineChart" class="chart-canvas"></canvas>
+      </article>
+      <article class="chart-card">
+        <div class="chart-title">Category Mix (Pie)</div>
+        <canvas id="pieChart" class="chart-canvas"></canvas>
+      </article>
+      <article class="chart-card">
+        <div class="chart-title">Growth Rate (Area)</div>
+        <canvas id="areaChart" class="chart-canvas"></canvas>
+      </article>
+      <article class="chart-card">
+        <div class="chart-title">Region Share (Donut)</div>
+        <canvas id="doughnutChart" class="chart-canvas"></canvas>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <p>📞 <strong>Contact:</strong> <a href="tel:+918056106602">8056106602</a> &nbsp;|&nbsp; 📧 <strong>Email:</strong> <a href="mailto:udhayalakshmi.s05@gmail.com">udhayalakshmi.s05@gmail.com</a></p>
+    <p>&copy; 2025 Udhaya — Dashboard Services</p>
+  </footer>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Shared options
+    const tinyOpts = (withAxes = true) => ({
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'nearest', intersect: false }, // 👈 easy click/tap
+      plugins: {
+        legend: { display: true, position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } },
+        tooltip: { enabled: true, bodyFont: { size: 11 }, titleFont: { size: 12 } }
+      },
+      scales: withAxes ? {
+        x: { ticks: { font: { size: 9 } }, grid: { display: false } },
+        y: { ticks: { font: { size: 9 } }, grid: { color: 'rgba(0,0,0,.06)' } }
+      } : {}
+    });
+
+    const c1 = '#2575fc', c2 = '#6a11cb', c3 = '#00c851', c4 = '#ffbb33', c5 = '#ff4444', c6 = '#33b5e5';
+
+    // Bar
+    new Chart(document.getElementById('barChart'), {
+      type: 'bar',
+      data: { labels: ['Jan','Feb','Mar','Apr','May'], datasets: [{ label:'Sales', data:[12,19,8,17,25], backgroundColor: c1, borderRadius: 6, maxBarThickness: 24 }] },
+      options: tinyOpts(true)
+    });
+
+    // Line
+    new Chart(document.getElementById('lineChart'), {
+      type: 'line',
+      data: { labels: ['Jan','Feb','Mar','Apr','May'], datasets: [{ label:'Revenue', data:[5,15,10,20,30], borderColor:c2, backgroundColor:c2+'22', pointRadius:4, tension:.35, fill:false }] },
+      options: tinyOpts(true)
+    });
+
+    // Pie
+    new Chart(document.getElementById('pieChart'), {
+      type: 'pie',
+      data: { labels:['A','B','C'], datasets:[{ data:[40,30,30], backgroundColor:[c1,c2,c3] }] },
+      options: tinyOpts(false)
+    });
+
+    // Area
+    new Chart(document.getElementById('areaChart'), {
+      type: 'line',
+      data: { labels:['Jan','Feb','Mar','Apr','May'], datasets:[{ label:'Growth', data:[3,7,12,18,28], borderColor:c3, backgroundColor:c3+'55', fill:true, pointRadius:4, tension:.35 }] },
+      options: tinyOpts(true)
+    });
+
+    // Doughnut
+    new Chart(document.getElementById('doughnutChart'), {
+      type: 'doughnut',
+      data: { labels:['North','South','East','West'], datasets:[{ data:[25,20,30,25], backgroundColor:[c5,c4,c3,c6], cutout:'60%' }] },
+      options: tinyOpts(false)
+    });
+  </script>
+</body>
+</html>
